@@ -10,7 +10,13 @@ pipeline {
             }
         }
 
-        stage('Build Images') {
+        stage('Pull Latest Code') {
+            steps {
+                sh 'git pull origin main || true'
+            }
+        }
+
+        stage('Build') {
             steps {
                 sh 'docker compose build'
             }
@@ -18,20 +24,9 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'docker compose up -d'
+                sh 'docker compose up -d --remove-orphans'
             }
-        }
-
-    }
-
-    post {
-
-        success {
-            echo 'Deployment Successful'
-        }
-
-        failure {
-            echo 'Deployment Failed - Existing Containers Remain Running'
         }
     }
 }
+
