@@ -8,9 +8,7 @@ const normalizeApiBase = (value?: string) => {
   return base.endsWith("/api") ? base : `${base}/api`;
 };
 
-const API_BASE = normalizeApiBase(
-  import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL,
-);
+const API_BASE = "http://13.219.246.150:8000/api";
 
 export async function calculateExpression(expression: string): Promise<CalculateResponse> {
   const response = await fetch(`${API_BASE}/calculate`, {
